@@ -1,0 +1,107 @@
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+       
+
+        .certificate-title {
+            font-size: 18pt;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .student-info-table {
+            width: 100%;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .student-info-table td {
+            padding: 5px;
+        }
+
+        .schedule {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            font-size: 12px;
+        }
+
+        .schedule th,
+        .schedule td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .schedule th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        .signature-table {
+            width: 100%;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+
+        .signature-table td {
+            text-align: center;
+            padding-top: 30px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #333;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .signature-title {
+            font-style: italic;
+        }
+
+        .header-table {
+        width: 100%;
+    }
+
+    .header-table td {
+        vertical-align: middle;
+    }
+
+    .header-logo {
+        text-align: center;
+    }
+
+    .header-logo img {
+        width: 450px; /* Adjust size as needed */
+        height: auto;
+    }
+
+    .info-box {
+        text-align: right;
+        font-size: 8px;
+    }
+
+    .info-box p {
+        margin: 2px 0;
+    }
+    </style>

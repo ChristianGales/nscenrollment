@@ -1,0 +1,1 @@
+<img src="{{ asset('img/logo.png') }}" class="img-fluid mx-auto d-block" width="50" alt="nsc logo">
