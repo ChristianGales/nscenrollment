@@ -135,8 +135,6 @@ Route::middleware(['auth', 'adminMiddleware'])->group(function(){
            
             Route::delete('{section}', 'destroy')->name('destroy');
 
-
-
     });
 
     //subject routes
