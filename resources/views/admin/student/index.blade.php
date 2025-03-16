@@ -21,57 +21,60 @@
               </div>
           @endsession
 
-          <div class="col-md-12 mt-4">
+          <div class="col-12">
               <div class="card">
-                  <div class="card-header pb-4 px-3 d-flex align-items-center justify-content-between">
-                      <h6 class="mb-0 me-3">Manage Students</h6>
-                      <div class="d-flex align-items-center">
-                          {{-- grade lvl filter --}}
-                          <div class="input-group input-group-outline me-2" style="width: 200px;">
-                              <select id="gradeLevelFilter" class="form-control">
-                                  <option value="">All Grade Levels</option>
-                                  @foreach ($gradeLevels as $gradeLevel)
-                                      <option value="{{ $gradeLevel->id }}">{{ $gradeLevel->name }}</option>
-                                  @endforeach
-                              </select>
-                          </div>
-
-                          {{-- section filter --}}
-                          <div class="input-group input-group-outline me-2" style="width: 200px;">
-                              <select id="sectionFilter" class="form-control">
-                                  <option value="">All Sections</option>
-                                  @foreach ($sections as $section)
-                                      <option value="{{ $section->id }}">{{ $section->name }}</option>
-                                  @endforeach
-                              </select>
-                          </div>
-
-                          {{-- status filter --}}
-                          <div class="input-group input-group-outline me-2" style="width: 200px;">
-                            <select id="statusFilter" class="form-control">
-                                <option value="">All Statuses</option>
-                                @foreach ($statuses as $status)
-                                    <option value="{{ $status }}">{{ $status }}</option>
-                                @endforeach
-                            </select>
+                <div class="card-header pb-0 px-3">
+                    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+                        <h6 class="mb-2 mb-md-0">Manage Students</h6>
+                        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 w-100 w-md-auto">
+                            {{-- grade lvl filter --}}
+                            <div class="input-group input-group-outline mb-2 mb-sm-0">
+                                <select id="gradeLevelFilter" class="form-control">
+                                    <option value="">All Grade Levels</option>
+                                    @foreach ($gradeLevels as $gradeLevel)
+                                        <option value="{{ $gradeLevel->id }}">{{ $gradeLevel->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                
+                            {{-- section filter --}}
+                            <div class="input-group input-group-outline mb-2 mb-sm-0">
+                                <select id="sectionFilter" class="form-control">
+                                    <option value="">All Sections</option>
+                                    @foreach ($sections as $section)
+                                        <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                
+                            {{-- status filter --}}
+                            <div class="input-group input-group-outline mb-2 mb-sm-0">
+                                <select id="statusFilter" class="form-control">
+                                    <option value="">All Statuses</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status }}">{{ $status }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                
+                            {{-- search --}}
+                            <div class="input-group input-group-outline mb-2 mb-sm-0">
+                                <label class="form-label">Search student...</label>
+                                <input type="text" class="form-control" id="searchInput">
+                            </div>
+                
+                            <a href="{{ route('admin.student.create') }}" class="btn mb-0 bg-gradient-dark w-100">
+                                <i class="material-symbols-rounded text-sm me-2">contact_page</i>Enroll Student
+                              </a>
                         </div>
+                    </div>
+                </div>
 
-                          {{-- search --}}
-                          <div class="input-group input-group-outline me-2" style="width: 200px;">
-                              <label class="form-label">Search student...</label>
-                              <input type="text" class="form-control" id="searchInput">
-                          </div>
 
-                          <a href="{{ route('admin.student.create') }}" class="btn mb-0 bg-gradient-dark">
-                              <i class="material-symbols-rounded text-sm me-2">contact_page</i>Enroll Student
-                          </a>
-                      </div>
-                  </div>
-
-                  <div class="card-body pt-0 p-3">
+                  <div class="card-body pt-4 p-3">
                       <ul class="list-group">
-                          <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                              <div class="card-body px-0 pb-2">
+                          <li class="list-group-item border-0 d-flex p-2 p-md-4 mb-2 bg-gray-100 border-radius-lg">
+                              <div class="card-body px-0 pb-2 w-100">
                                   <div class="table-responsive p-0">
                                       <table class="table align-items-center mb-0" id="studentTable">
                                           <thead>
@@ -177,7 +180,7 @@
                                                 </td> --}}
                                                 
                                                   <td class="align-middle text-center">
-                                                      <div class="d-flex justify-content-center align-items-center">
+                                                      <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
 
                                                         <a class="btn btn-link text-dark text-gradient px-3 mb-0" href="{{ route('admin.student.download', $student->id) }}">
                                                             <i class="material-symbols-rounded text-lg me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Certificate of Registration">description</i>
@@ -230,8 +233,11 @@
                                           </tbody>
                                       </table>
                                   </div>
+
                                   {{-- pagination --}}
-                                  {{ $students->links() }}
+                                  
+                                     {{ $students->links() }}
+                            
                               </div>
                           </li>
                       </ul>

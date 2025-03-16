@@ -12,29 +12,32 @@
                 </div>
             @endsession
 
-            <div class="col-md-12 mt-4">
+            <div class="col-12">
                 <div class="card">
-                    <div class="card-header pb-0 px-3 d-flex align-items-center justify-content-between">
-                        {{-- Left --}}
-                        <h6 class="mb-0 me-3">Manage Academic Year</h6>
+                    <div class="card-header pb-0 px-3">
+                        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
 
-                        {{-- Right --}}
-                        <div class="d-flex align-items-center">
-                            {{-- Search (if needed) --}}
-                            <div class="input-group input-group-outline me-2" style="width: 200px;">
-                                <label class="form-label">Type here...</label>
-                                <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                            {{-- Left --}}
+                            <h6 class="mb-2 mb-md-0">Manage Academic Year</h6>
+
+                            {{-- Right --}}
+                            <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 w-100 w-md-auto">
+                                {{-- Search (if needed) --}}
+                                <div class="input-group input-group-outline mb-2 mb-sm-0 w-100">
+                                    <label class="form-label">Type here...</label>
+                                    <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                                </div>
+                                <a href="{{ route('admin.year.create') }}" class="btn mb-0 bg-gradient-dark w-100 ">
+                                    <i class="material-symbols-rounded text-sm me-2">add</i> Academic Year
+                                </a>
                             </div>
-                            <a href="{{ route('admin.year.create') }}" class="btn mb-0 bg-gradient-dark">
-                                <i class="material-symbols-rounded text-sm me-2">add</i>Add Academic Year
-                            </a>
                         </div>
                     </div>
 
                     <div class="card-body pt-4 p-3">
                         <ul class="list-group">
-                            <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                                <div class="card-body px-0 pb-2">
+                            <li class="list-group-item border-0 d-flex p-2 p-md-4 mb-2 bg-gray-100 border-radius-lg">
+                                <div class="card-body px-0 pb-2 w-100">
                                     <div class="table-responsive p-0">
                                         <table class="table align-items-center mb-0">
                                             <thead>
@@ -65,30 +68,30 @@
                                                                 @endif
                                                             </td>
                                                             <td class="align-middle text-center">
-                                                                <div class="d-flex justify-content-center align-items-center">
+                                                                <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
                                                                     {{-- Conditionally show the Set Active link ONLY if the status is 'inactive' --}}
                                                                     @if ($acadYear->status === 'inactive')  
                                                                         <form action="{{ route('admin.year.activate', $acadYear) }}" method="POST">
                                                                             @csrf
-                                                                            <button type="submit" class="btn btn-link text-info text-gradient px-3 mb-0">
-                                                                                <i class="material-symbols-rounded text-lg me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Certifiacte of Registration"></i>Set Active
+                                                                            <button type="submit" class="btn btn-link text-info text-gradient px-2 px-md-3 mb-0">
+                                                                                <i class="material-symbols-rounded text-lg me-1 me-md-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Certifiacte of Registration"></i>Set Active
                                                                             </button>
                                                                         </form>
                                                                     @endif
                                                                     {{-- To Delete Academic Year --}}
-                                                                    <button type="button" class="btn btn-link text-danger text-gradient px-3 mb-0"
+                                                                    <button type="button" class="btn btn-link text-danger text-gradient px-2 px-md-3 mb-0"
                                                                         data-bs-toggle="modal" data-bs-target="#deleteModal{{ $acadYear->id }}">
-                                                                        <i class="material-symbols-rounded text-lg me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete School Year">delete</i>
+                                                                        <i class="material-symbols-rounded text-lg me-1 me-md-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete School Year">delete</i>
                                                                     </button>
 
-                                                                    <a href="{{ route('admin.year.edit', $acadYear) }}" class="btn btn-link text-info px-3 mb-0">
-                                                                        <i class="material-symbols-rounded text-lg me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit School Year">edit_square</i>
+                                                                    <a href="{{ route('admin.year.edit', $acadYear) }}" class="btn btn-link text-info px-2 px-md-3 mb-0">
+                                                                        <i class="material-symbols-rounded text-lg me-1 me-md-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit School Year">edit_square</i>
                                                                     </a>
                                                                 </div>
 
                                                                 {{-- Delete Confirmation Modal --}}
                                                                 <div class="modal fade" id="deleteModal{{ $acadYear->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-dialog modal-dialog-centered modal-sm modal-md" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
                                                                                 <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
@@ -119,7 +122,9 @@
                                     </div>
 
                                     {{-- after table use this as pagination --}}
-                                    {{ $acadYears->links()}}
+                                    
+                                        {{ $acadYears->links()}}
+                                   
                                 </div>
                             </li>
                         </ul>

@@ -12,37 +12,32 @@
                 </div>
             @endsession
 
-
-            <div class="col-md-12 mt-4">
-                {{-- add card where can filter by grade level --}}
-
+            <div class="col-12">
                 <div class="card">
-                    <div class="card-header pb-4 px-3 d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0 me-3">Manage Section</h6>
-                        <div class="d-flex align-items-center">
-
-                            {{-- grade lvl filter --}}
-                            <div class="input-group input-group-outline me-2" style="width: 200px;">
-                                <select id="gradeLevelFilter" class="form-control">
-                                    <option value="">All Grade Levels</option>
-                                    @foreach ($gradeLevels as $gradeLevel)
-                                        <option value="{{ $gradeLevel->id }}">{{ $gradeLevel->name }}</option>
-                                    @endforeach
-                                </select>
+                    <div class="card-header pb-0 px-3">
+                        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+                            <h6 class="mb-2 mb-md-0">Manage Section</h6>
+                            <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 w-100 w-md-auto">
+                                {{-- grade lvl filter --}}
+                                <div class="input-group input-group-outline mb-2 mb-sm-0 w-100" >
+                                    <select id="gradeLevelFilter" class="form-control" >
+                                        <option value="">All Grade Levels</option>
+                                        @foreach ($gradeLevels as $gradeLevel)
+                                            <option value="{{ $gradeLevel->id }}">{{ $gradeLevel->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <a href="{{ route('admin.section.create') }}" class="btn mb-0 bg-gradient-dark w-100">
+                                    <i class="material-symbols-rounded text-sm me-2">add</i>Add Section
+                                </a>
                             </div>
-
-                            <a href="{{ route('admin.section.create') }}" class="btn mb-0 bg-gradient-dark">
-                                <i class="material-symbols-rounded text-sm me-2">add</i>Add Section
-                            </a>
                         </div>
                     </div>
 
-                    
-
-                    <div class="card-body pt-0 p-3">
+                    <div class="card-body pt-4 p-3">
                         <ul class="list-group">
-                            <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                                <div class="card-body px-0 pb-2">
+                            <li class="list-group-item border-0 d-flex p-2 p-md-4 mb-2 bg-gray-100 border-radius-lg">
+                                <div class="card-body px-0 pb-2 w-100">
                                     <div class="table-responsive p-0">
                                         <table class="table align-items-center mb-0" id="sectionTable">
                                             <thead>
@@ -60,63 +55,64 @@
                                                         </td>
                                                     </tr>
                                                 @else
-                                                @foreach ($sections as $section)
-                                                <tr data-grade-level="{{ $section->grade_lvl_id }}">
-                                                    <td class="align-middle text-center">
-                                                        <span class="text-secondary text-xs font-weight-bold">{{ $section->name }}</span>
-                                                    </td>
-                                                    <td class="align-middle text-center">
-                                                        <span class="text-secondary text-xs font-weight-bold">
-                                                            {{ $section->gradeLevel->name ?? 'N/A' }}
-                                                        </span>
-                                                    </td>
-                                                    <td class="align-middle text-center">
-                                                        <div class="d-flex justify-content-center align-items-center">
-                                                        
-                                                            <button type="button" class="btn btn-link text-danger text-gradient px-3 mb-0"
-                                                                    data-bs-toggle="modal" data-bs-target="#deleteModal{{ $section->id }}">
-                                                                  <i class="material-symbols-rounded text-lg me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Section">delete</i>
-                                                              </button>
-                                            
-                                                            <a href="{{ route('admin.section.edit', $section) }}" class="btn btn-link text-info px-3 mb-0">
-                                                                <i class="material-symbols-rounded text-lg me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Section">edit_square</i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                    @foreach ($sections as $section)
+                                                        <tr data-grade-level="{{ $section->grade_lvl_id }}">
+                                                            <td class="align-middle text-center">
+                                                                <span class="text-secondary text-xs font-weight-bold">{{ $section->name }}</span>
+                                                            </td>
+                                                            <td class="align-middle text-center">
+                                                                <span class="text-secondary text-xs font-weight-bold">
+                                                                    {{ $section->gradeLevel->name ?? 'N/A' }}
+                                                                </span>
+                                                            </td>
+                                                            <td class="align-middle text-center">
+                                                                <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+                                                                    <button type="button" class="btn btn-link text-danger text-gradient px-2 px-md-3 mb-0"
+                                                                        data-bs-toggle="modal" data-bs-target="#deleteModal{{ $section->id }}">
+                                                                        <i class="material-symbols-rounded text-lg me-1 me-md-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Section">delete</i>
+                                                                    </button>
 
-                                                 {{-- Delete Confirmation Modal --}}
-                                                 <div class="modal fade" id="deleteModal{{ $section->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                Are you sure you want to delete this record?
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                <form action="{{ route('admin.section.destroy', $section) }}" method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn bg-gradient-danger">Delete</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                                    <a href="{{ route('admin.section.edit', $section) }}" class="btn btn-link text-info px-2 px-md-3 mb-0">
+                                                                        <i class="material-symbols-rounded text-lg me-1 me-md-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Section">edit_square</i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
 
-                                            @endforeach
-                                            @endif
+                                                            {{-- Delete Confirmation Modal --}}
+                                                            <div class="modal fade" id="deleteModal{{ $section->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered modal-sm modal-md" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Are you sure you want to delete this record?
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                            <form action="{{ route('admin.section.destroy', $section) }}" method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit" class="btn bg-gradient-danger">Delete</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
-                                    {{-- pagination --}}
-                                    {{ $sections->links() }}
+
+                                    {{-- after table use this as pagination --}}
+                                    
+                                        {{ $sections->links() }}
+                                   
                                 </div>
                             </li>
                         </ul>
@@ -127,24 +123,24 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const gradeLevelFilter = document.getElementById('gradeLevelFilter');
-    const sectionTable = document.getElementById('sectionTable');
-    
-    gradeLevelFilter.addEventListener('change', function() {
-        const selectedGradeLevel = this.value;
-        const rows = sectionTable.querySelectorAll('tbody tr');
-        
-        rows.forEach(row => {
-            const rowGradeLevel = row.getAttribute('data-grade-level');
-            
-            if (selectedGradeLevel === '' || rowGradeLevel === selectedGradeLevel) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            const gradeLevelFilter = document.getElementById('gradeLevelFilter');
+            const sectionTable = document.getElementById('sectionTable');
+
+            gradeLevelFilter.addEventListener('change', function() {
+                const selectedGradeLevel = this.value;
+                const rows = sectionTable.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    const rowGradeLevel = row.getAttribute('data-grade-level');
+
+                    if (selectedGradeLevel === '' || rowGradeLevel === selectedGradeLevel) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
         });
-    });
-});
     </script>
 </x-app-layout>

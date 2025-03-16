@@ -38,7 +38,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        {{-- <div class="col-md-6">
                                             <label class="form-label">Grade Level <span class="text-danger">*</span>
                                                 @error('grade_lvl_id')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -52,7 +52,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-md-6">
                                             <label class="form-label">Student Status <span class="text-danger">*</span>

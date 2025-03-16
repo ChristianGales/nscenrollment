@@ -6,7 +6,13 @@
                     <div class="card-header pb-0 px-3 d-flex align-items-center justify-content-between">
                         <h6 class="mb-0 me-3">Student Enrollment Form ( <span class="text-danger"> * </span> ) Required</h6>
 
-                        <h6 class="m-0  me-3">FOR SCHOOL YEAR 2024-2025</h6>
+                        {{-- <h6 class="m-0 me-3">
+                            For School Year 2024 - 2025
+                            FOR SCHOOL YEAR {{ $schoolYear->name ?? 'No Active School Year' }}
+                        </h6> --}}
+                        
+                        
+
                     </div>
                     {{-- for testing error --}}
                     @if ($errors->any())
@@ -323,7 +329,7 @@
                                                 @enderror
                                             </label>
                                             <div class="input-group input-group-outline mb-3 @error('mothername') is-invalid @enderror">
-                                                <input type="number" class="form-control @error('mothername') is-invalid @enderror" name="mothername"  value="{{ old('mothername') }}">
+                                                <input type="text" class="form-control @error('mothername') is-invalid @enderror" name="mothername"  value="{{ old('mothername') }}">
                                             </div>
                                            
                                         </div>
@@ -361,7 +367,7 @@
                                                 @enderror
                                             </label>
                                             <div class="input-group input-group-outline mb-3 @error('g_contact') is-invalid @enderror">
-                                                <input type="text" class="form-control @error('g_contact') is-invalid @enderror" name="g_contact"  value="{{ old('g_contact') }}">
+                                                <input type="number" class="form-control @error('g_contact') is-invalid @enderror" name="g_contact"  value="{{ old('g_contact') }}">
                                             </div>
                                            
                                         </div>

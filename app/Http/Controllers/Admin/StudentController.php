@@ -23,24 +23,28 @@ class StudentController extends Controller
    
 
 
-    public function index()
-    {
-        // Get all students with pagination
-        $students = Student::paginate(10);
-        $gradeLevels = GradeLevel::all();
-        $sections = Section::all();
+     public function index()
+     {
+         // Get all students with pagination
+         $students = Student::paginate(10);
+         $gradeLevels = GradeLevel::all();
+         $sections = Section::all();
+     
+         // Fetch the active school year
+         $schoolYear = Acadyear::where('is_active', 1)->first();
 
-        $statuses = ['Enrolled', 'Not Enrolled', 'Transferred', 'Graduated']; // Define your status options
-
-        return view('admin.student.index', [
-            'students' => $students,
-            'gradeLevels' => $gradeLevels,
-            'sections' => $sections,
-            'statuses' => $statuses,
-        ]);
-
-
-    }
+         
+         $statuses = ['Enrolled', 'Not Enrolled', 'Transferred', 'Graduated']; 
+     
+         return view('admin.student.index', [
+             'students' => $students,
+             'gradeLevels' => $gradeLevels,
+             'sections' => $sections,
+             'statuses' => $statuses,
+             'schoolYear' => $schoolYear,
+         ]);
+     }
+     
 
     /**
      * Show the form for creating a new student.
@@ -172,7 +176,7 @@ class StudentController extends Controller
     {
         $validated = $request->validate([
             'lrn' => 'required|digits:12|unique:student,lrn,' . $student->id,
-            'grade_lvl_id' => 'required|exists:grade_lvl,id',
+            // 'grade_lvl_id' => 'required|exists:grade_lvl,id',
             'lastname' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
             'middlename' => 'required|string|max:255',
@@ -229,37 +233,43 @@ class StudentController extends Controller
     }
 
     public function download(Student $student) {
-        // Get the student's subjects through student_subject table
+        // Get the student's subjects from student_subject table
         $studentSubjects = DB::table('student_subject')
                             ->where('student_id', $student->id)
                             ->pluck('subject_id');
-        
-        // Find the schedules for these subjects in the student's section and grade level
+    
+        // Fetch subjects directly, ensuring all enrolled subjects are included
+        $subjects = Subject::whereIn('id', $studentSubjects)->get();
+    
+        // Get schedules for these subjects in the student's section and grade level
         $schedules = Schedule::with(['subject', 'section', 'teacher'])
                             ->where('section_id', $student->section_id)
                             ->where('grade_lvl_id', $student->grade_lvl_id)
                             ->whereIn('subject_id', $studentSubjects)
-                            ->get();
-        
+                            ->get()
+                            ->keyBy('subject_id'); // Use subject_id as key for quick lookup
+    
         $scheduleData = [];
-        
-        foreach ($schedules as $schedule) {
+    
+        foreach ($subjects as $subject) {
+            $schedule = $schedules->get($subject->id); // Retrieve schedule if it exists
+    
             $scheduleData[] = [
-                'subject' => $schedule->subject->subject_name,
-                'time' => $schedule->time_from . ' - ' . $schedule->time_to,
-                'day' => $schedule->day,
-                'room' => $schedule->room,
-                'teacher' => $schedule->teacher->fullname,
+                'subject' => $subject->subject_name,
+                'time' => $schedule ? ($schedule->time_from . ' - ' . $schedule->time_to) : 'N/A',
+                'day' => $schedule ? $schedule->day : 'N/A',
+                'room' => $schedule ? $schedule->room : 'N/A',
+                'teacher' => $schedule ? $schedule->teacher->fullname : 'N/A',
             ];
         }
-        
+    
         // Get the current school year
         $schoolYear = Acadyear::where('is_active', 1)->first();
-        
+    
         // Get the student's grade level and section
         $gradeSection = Section::find($student->section_id);
         $gradeLevel = GradeLevel::find($student->grade_lvl_id);
-        
+    
         // Generate PDF
         $pdf = \PDF::loadView('admin.student.pdf', [
             'student' => $student,
@@ -268,8 +278,9 @@ class StudentController extends Controller
             'gradeLevel' => $gradeLevel,
             'section' => $gradeSection,
         ]);
-        
+    
         // Download the PDF with a filename based on the student's name
         return $pdf->stream('Certificate_of_Registration_'.$student->lastname.'_'.$student->firstname.'.pdf');
     }
+    
 }
